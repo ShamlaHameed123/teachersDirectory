@@ -25,4 +25,5 @@
 img{
 	width: 200px;
 	padding-left: 250px;
+	border: 5px solid #555;
 }

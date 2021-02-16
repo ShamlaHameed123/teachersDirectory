@@ -12,6 +12,7 @@ from django.http import JsonResponse, HttpResponse
 import pandas as pd
 import csv
 import json
+import os
 
 # Create your views here.
 
@@ -39,7 +40,10 @@ def profile(request, id):
 
 
 def populate(request):
-    df = pd.read_csv("/home/shamla/Downloads/Tech Test/Teachers.csv")
+    if Teachers.objects.all():
+        return redirect('/teachers/home')
+    df = pd.read_csv(os.path.join(os.getcwd(),"Teachers.csv"))
+    print(df)
     # to remove empty NaN rows
     df=df.dropna()
     # Adds a column  M1_list forming a list of elements
@@ -62,7 +66,7 @@ def populate(request):
     for index, row in row_iter
     ]
     Teachers.objects.bulk_create(objs)
-    return redirect('/home')
+    return redirect('/teachers/home')
 
 @login_required
 def csv_database_write(request):
@@ -98,7 +102,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('/home')
+            return redirect('/teachers/home')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
