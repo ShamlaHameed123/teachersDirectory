@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .forms import SignUpForm
 from .models import Teachers
 
@@ -17,17 +18,19 @@ import os
 # Create your views here.
 
 def home(request):
-	return render(request, 'home.html')
+    return render(request, 'home.html')
 
 def teachers_list(request, *args, **kwargs):
-    search = request.GET.get('search["value"]')
+    search = request.GET.get('search[value]')
     draw = int(request.GET.get('draw', 0))
     length = int(request.GET.get('length', 10))
     start = int(request.GET.get('start', 0))
-    querysets = Teachers.objects.all()
-    total = querysets.count()
+    teachers = Teachers.objects.all()
+    if search:
+        teachers = Teachers.objects.filter(Q(first_name__istartswith=search)| Q(subject_taught__icontains=search))
+    total = teachers.count()
 
-    queryset = querysets[start:start+length]
+    queryset = teachers[start:start+length]
     context={"data":list(queryset.values()), "recordsTotal":total, "recordsFiltered": total}
     return JsonResponse(context)
 
