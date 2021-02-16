@@ -22,8 +22,9 @@ After running the server, open http://localhost:8000/teachers/home and click on 
 
 1. Teacher's directory opens at http://localhost:8000/teachers/home.
 2. Click on the teacher to open up the profile page at http://localhost:8000/teachers/profile/{teacher-id}
-3. For the teacher whose profile image is not available, default_teacher.png image will be displayed
+3. For the teacher whose profile image is not available, default_teacher.png image will be displayed.
 4. The teachers' directory can be imported by clicking on Export as csv, where csv will be downloaded only by authenticated user, hence prompting to login.
+5. The teacher can be filtered by firstname or the subjects taught by searching through Search bar.
 
 
 
