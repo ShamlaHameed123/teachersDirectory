@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
 
 <a href="{%url 'populate' %}">Populate feed</a>
+
 <h1 align="center"> Teachers Directory </h1>
 </head>
 
@@ -32,7 +33,7 @@
   <script>
 $(document).ready(function() {
 
-	$('#teachers').DataTable({
+	var mytable = $('#teachers').DataTable({
 			"serverSide": true,
 			"searching": true,
 			"responsive": true,
@@ -43,7 +44,7 @@ $(document).ready(function() {
 			},
 			"columns": [
 
-			    {"data": "first_name",
+			    {"data": "first_name", "searcheable":true,
 				"render": function (data, type, full) {
 					console.log(full.id);
 					 if(type === 'display'){
@@ -53,7 +54,14 @@ $(document).ready(function() {
 			     }
 			 }
 	],
+	"columnDefs": [
+    { "searchable": true, "targets": 0 }
+	
+  ]
 } );
+} );
+$('#myInput').on( 'keyup', function () {
+    table.search( this.value ).draw();
 } );
 
   </script>
