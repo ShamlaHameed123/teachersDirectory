@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Students sheet</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+<a href="{%url 'populate' %}">Populate feed</a>
+<h1 align="center"> Teachers Directory </h1>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <table id="teachers" class="table table-striped table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Teachers</th>
+
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+  <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+$(document).ready(function() {
+
+	$('#teachers').DataTable({
+			"serverSide": true,
+			"searching": true,
+			"responsive": true,
+            "dataSrc":"",
+			"ajax": {
+				"url": "{%url 'teachers-list' %}",
+
+			},
+			"columns": [
+
+			    {"data": "first_name",
+				"render": function (data, type, full) {
+					console.log(full.id);
+					 if(type === 'display'){
+                data = '<a href="profile/' + full.id + '">' + full.first_name+' '+full.last_name + '</a>';
+            }
+			return data;
+			     }
+			 }
+	],
+} );
+} );
+
+  </script>
+</div>
+</body>
+</html>
