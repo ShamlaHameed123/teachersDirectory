@@ -1,0 +1,32 @@
+{% load static %}
+<html>
+<h2 align="center"><a href="{%url 'csv_database_write' %}">Export as csv</a></h2>
+<div class="card-body">
+
+   <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <h1 align="center"><b>{{teacher.first_name}} {{teacher.last_name}}</b></h1></br>
+	<table class="table-teachers" align="center">
+	{% with 'images/default_teacher.png' as default_image_static %}
+	<tr colspan="4">{% with 'images/'|add:teacher.profile_picture as image_static %}
+                <img src="{% static image_static %}" onerror="this.onerror=null; this.src='{% static  default_image_static%}'">
+               {% endwith %}
+			                  {% endwith %}
+   </tr>
+	<tr><td><th><label>First Name</label></th></td><td>{{teacher.first_name}}</td></tr>
+	<tr><td><th><label>Last Name</label></th></td><td>{{teacher.last_name}}</td></tr>
+	<tr><td><th><label>Email Address</label></th></td><td>{{teacher.email_address}}</td></tr>
+	<tr><td><th><label>Phone Number</label></th></td><td>{{teacher.phone_number}}</td></tr>
+	<tr><td><th><label>Room Number</label></th></td><td>{{teacher.room_number}}</td></tr>
+	<tr><td><th><label>Subjects Taught</label></th></td>
+	{% for subject in subjects %}
+<td>
+		{{subject}}</br>
+</td>
+	{% endfor %}
+</tr>
+
+</table>
+
+</div>
+
+</html>
